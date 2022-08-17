@@ -1,4 +1,5 @@
 import { Client } from 'fnbr';
+import './modules/errors';
 import config from './modules/config';
 import sendNotification from './modules/pushover';
 import { start } from './modules/util';

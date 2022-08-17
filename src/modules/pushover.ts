@@ -7,7 +7,7 @@ interface Notification {
 }
 
 export default async function sendNotification(notification: Notification) {
-    return axios.post('https://pushover.net/', {
+    return axios.post('https://api.pushover.net/1/messages.json', {
         token: config.pushover.applicationKey,
         user: config.pushover.userKey,
         ...notification

@@ -57,12 +57,12 @@ export async function retry<T>(fn: () => Promise<T>, attempts: number = 5): Prom
     }
 }
 
+export const bullet = '  - ';
+
 /**
  * Prints the application details.
  */
 export function start() {
-    const bullet = '  - ';
-
     console.log(`Epic Games Friends Notifier v${details.version}`);
     console.log(`${bullet}AngaBlue`);
     console.log(`${bullet}https://anga.blue`);
