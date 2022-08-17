@@ -66,5 +66,4 @@ export function start() {
     console.log(`Epic Games Friends Notifier v${details.version}`);
     console.log(`${bullet}AngaBlue`);
     console.log(`${bullet}https://anga.blue`);
-    console.log(`${bullet}Not for distribution`);
 }
