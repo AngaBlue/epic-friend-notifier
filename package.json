@@ -5,6 +5,7 @@
   "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc && npm run make",
+    "start": "node dist/src/index.js",
     "make": "node build.js",
     "lint": "eslint . --ext .ts --fix",
     "watch": "tsc -w"

@@ -20,3 +20,5 @@ client.on('friend:request', request => {
     console.log(`${request.displayName} has sent you a friend request`);
     sendNotification({ message: `${request.displayName} has sent you a friend request.`, title: 'Epic Games Friend Request' });
 });
+
+client.login();
