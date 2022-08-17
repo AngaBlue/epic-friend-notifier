@@ -1,0 +1,11 @@
+{
+    "epic": {
+        "accountId": "",
+        "deviceId": "",
+        "secret": ""
+    },
+    "pushover": {
+        "applicationKey": "",
+        "userKey": ""
+    }
+}

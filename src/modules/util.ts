@@ -1,6 +1,8 @@
 import readline from 'readline-sync';
 import config, { Config } from './config';
 
+import details from '../../package.json';
+
 /**
  * Asynchronous wait function
  * @param time
@@ -53,4 +55,16 @@ export async function retry<T>(fn: () => Promise<T>, attempts: number = 5): Prom
             if (errCount === attempts - 1) throw error;
         }
     }
+}
+
+/**
+ * Prints the application details.
+ */
+export function start() {
+    const bullet = '  - ';
+
+    console.log(`Epic Games Friends Notifier v${details.version}`);
+    console.log(`${bullet}AngaBlue`);
+    console.log(`${bullet}https://anga.blue`);
+    console.log(`${bullet}Not for distribution`);
 }

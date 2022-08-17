@@ -1,11 +1,37 @@
 import fs from 'fs';
+import Joi from 'joi';
 import path from 'path';
-import GfAPI from 'gfapi';
-import { exit, getPlatform, getUPC } from './util';
-import { getRLUPC } from '../modules/items/util';
-import configSchema, { Config, ConfigParsed } from './config';
-import { defaultImage } from './constants';
+import { exit } from './util';
 
+/**
+ * Define the config schema.
+ */
+export interface Config {
+    epic: {
+        accountId: string;
+        deviceId: string;
+        secret: string;
+    };
+    pushover: {
+        applicationKey: string;
+        userKey: string;
+    };
+}
+const configSchema = Joi.object({
+    epic: {
+        accountId: Joi.string().required(),
+        deviceId: Joi.string().required(),
+        secret: Joi.string().required()
+    },
+    pushover: {
+        applicationKey: Joi.string().required(),
+        userKey: Joi.string().required()
+    }
+});
+
+/**
+ * Parse the config file and validate it.
+ */
 let json: any = {};
 try {
     // Blocking read as config is required throughout entire app
@@ -23,37 +49,6 @@ if (validation.error) {
 }
 
 // Create Config
-const parsed: ConfigParsed = validation.value;
-const config: Config = {
-    GFAPI_KEY: parsed.GFAPI_KEY,
-    GFAPI_SECRET: parsed.GFAPI_SECRET
-};
-
-// Post
-if (parsed.post) {
-    const platform = getPlatform(parsed.post.platform) || GfAPI.PLATFORM.UNKNOWN;
-    const game = (parsed.post.game ? getUPC(parsed.post.game) : getRLUPC(platform)) ?? getRLUPC(platform);
-    config.post = {
-        ...parsed.post,
-        platform,
-        game
-    };
-}
-
-// Credits
-if (parsed.credits) {
-    const image = parsed.credits.image || config.post?.defaultImageURL || defaultImage;
-    const groups = parsed.credits.groups.map(g => {
-        if (Array.isArray(g)) return g;
-        return Array.from({ length: g.max - g.min + 1 }, (_v, k) => g.min + k);
-    });
-    config.credits = {
-        ...parsed.credits,
-        image,
-        groups
-    };
-}
+const config: Config = validation.value;
 
 export default config;
-export { Config };
-export type RequiredConfig<K extends keyof Config> = Config & Required<Pick<Config, K>>;
